@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import {
   Mail, Github, Linkedin, MapPin, Phone, ArrowUpRight, Menu, X,
   Code2, Layers, Database, Wrench, Cloud, Palette, FlaskConical,
-  GraduationCap, Award, Server, Circle, Sun, Moon,
+  GraduationCap, Award, Server, Circle, Sun, Moon, Boxes, Gamepad2,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -94,6 +94,65 @@ const EXPERIENCE = [
   },
 ];
 
+const PROJECTS = [
+  {
+    name: "Bazaar — Classified Ads Marketplace",
+    description: "Full-stack listings marketplace with search, categories, image uploads, and a WhatsApp bot for local group queries.",
+    tech: ["React 18", "TypeScript", "Vite", "Supabase", "Tailwind CSS"],
+    repo: "https://github.com/baigny/ClassifiedAds",
+    type: "app",
+  },
+  {
+    name: "Weather App",
+    description: "Location-aware weather dashboard with interactive maps and clustering, backed by Supabase.",
+    tech: ["React 19", "Vite", "Tailwind CSS", "Supabase", "Leaflet"],
+    repo: "https://github.com/baigny/weather_app",
+    type: "app",
+  },
+  {
+    name: "FinEdge Tracker API",
+    description: "Personal finance and expense tracker REST API with budgets, transaction trends, and JWT auth.",
+    tech: ["Node.js", "Express 5", "TypeScript", "MongoDB", "Jest"],
+    repo: "https://github.com/baigny/finedge_tracker",
+    type: "app",
+  },
+  {
+    name: "Event Management API",
+    description: "RESTful backend for scheduling events and managing participants, with role-based access and Swagger docs.",
+    tech: ["Node.js", "Express", "JWT", "Swagger"],
+    repo: "https://github.com/baigny/event-management-api",
+    type: "app",
+  },
+  {
+    name: "Frontend Apps Starter",
+    description: "A modern React + TypeScript boilerplate with shadcn/ui, Radix primitives, and Tailwind CSS.",
+    tech: ["React 19", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui"],
+    repo: "https://github.com/baigny/frontend-apps",
+    type: "app",
+  },
+  {
+    name: "Razorpay Checkout",
+    description: "Payment checkout flow built with Create React App, integrating the Razorpay payment gateway.",
+    tech: ["React", "Razorpay API"],
+    repo: "https://github.com/baigny/razorpay-checkout",
+    type: "app",
+  },
+  {
+    name: "Scientific Calculator",
+    description: "A dark-themed scientific calculator with a calculation history panel, built in vanilla JavaScript.",
+    tech: ["JavaScript", "HTML5", "CSS3"],
+    repo: "https://github.com/baigny/scientific-calculator",
+    type: "game",
+  },
+  {
+    name: "Snakes & Ladders",
+    description: "A browser-based Snakes & Ladders game with a Supabase-backed game engine and automated tests.",
+    tech: ["JavaScript", "Vite", "Supabase"],
+    repo: "https://github.com/baigny/snakes-and-ladders",
+    type: "game",
+  },
+];
+
 const SKILLS = [
   { label: "Languages", icon: Code2, items: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3", "PHP"] },
   { label: "Frontend", icon: Layers, items: ["React.js", "Next.js", "React Native", "Flutter"] },
@@ -118,6 +177,7 @@ const CERTS = [
 
 const SECTIONS = [
   { id: "work", label: "Experience" },
+  { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
@@ -410,48 +470,117 @@ function Experience() {
   );
 }
 
-function Skills() {
+function ProjectCard({ project }) {
   return (
-    <section id="skills" className="border-y border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+    <motion.a
+      href={project.repo}
+      target="_blank"
+      rel="noreferrer"
+      variants={fadeUp}
+      whileHover={{ y: -3 }}
+      transition={{ type: "spring", stiffness: 300, damping: 24 }}
+      className="group flex h-full flex-col rounded-xl border border-slate-200 bg-stone-50 p-5 transition-colors hover:border-emerald-300 dark:border-slate-800 dark:bg-slate-950 dark:hover:border-emerald-700"
+    >
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <h4 className="font-display text-base font-semibold text-slate-900 dark:text-slate-50">{project.name}</h4>
+        <Github className="h-4 w-4 flex-shrink-0 text-slate-400 transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
+      </div>
+      <p className="mb-4 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{project.description}</p>
+      <div className="flex flex-wrap gap-2">
+        {project.tech.map((t) => <Token key={t}>{t}</Token>)}
+      </div>
+    </motion.a>
+  );
+}
+
+function Projects() {
+  const apps = PROJECTS.filter((p) => p.type === "app");
+  const games = PROJECTS.filter((p) => p.type === "game");
+
+  return (
+    <section id="projects" className="border-y border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <Reveal><Eyebrow index="02">Skills</Eyebrow></Reveal>
+        <Reveal><Eyebrow index="02">Projects</Eyebrow></Reveal>
         <Reveal delay={60}>
           <h2 className="mb-14 max-w-2xl font-display text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl dark:text-slate-50">
-            A working toolkit, grouped the way I reach for it.
+            Apps, APIs and games built outside of client work.
           </h2>
         </Reveal>
 
+        <Reveal delay={80}>
+          <h3 className="mb-5 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+            <Boxes className="h-4 w-4 text-emerald-700 dark:text-emerald-400" /> Apps &amp; APIs
+          </h3>
+        </Reveal>
         <motion.div
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="mb-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
           variants={stagger}
         >
-          {SKILLS.map((group) => {
-            const Icon = group.icon;
-            return (
-              <motion.div
-                key={group.label}
-                variants={fadeUp}
-                whileHover={{ y: -3 }}
-                transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                className="h-full rounded-xl border border-slate-200 bg-stone-50 p-5 transition-colors hover:border-emerald-300 dark:border-slate-800 dark:bg-slate-950 dark:hover:border-emerald-700"
-              >
-                <div className="mb-4 flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-md bg-emerald-700 text-white dark:bg-emerald-500 dark:text-slate-950">
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <h3 className="font-mono text-xs uppercase tracking-widest text-slate-900 dark:text-slate-100">{group.label}</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((t) => <Token key={t}>{t}</Token>)}
-                </div>
-              </motion.div>
-            );
-          })}
+          {apps.map((p) => <ProjectCard key={p.name} project={p} />)}
+        </motion.div>
+
+        <Reveal delay={80}>
+          <h3 className="mb-5 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+            <Gamepad2 className="h-4 w-4 text-emerald-700 dark:text-emerald-400" /> Games
+          </h3>
+        </Reveal>
+        <motion.div
+          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+        >
+          {games.map((p) => <ProjectCard key={p.name} project={p} />)}
         </motion.div>
       </div>
+    </section>
+  );
+}
+
+function Skills() {
+  return (
+    <section id="skills" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+      <Reveal><Eyebrow index="03">Skills</Eyebrow></Reveal>
+      <Reveal delay={60}>
+        <h2 className="mb-14 max-w-2xl font-display text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl dark:text-slate-50">
+          A working toolkit, grouped the way I reach for it.
+        </h2>
+      </Reveal>
+
+      <motion.div
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger}
+      >
+        {SKILLS.map((group) => {
+          const Icon = group.icon;
+          return (
+            <motion.div
+              key={group.label}
+              variants={fadeUp}
+              whileHover={{ y: -3 }}
+              transition={{ type: "spring", stiffness: 300, damping: 24 }}
+              className="h-full rounded-xl border border-slate-200 bg-stone-50 p-5 transition-colors hover:border-emerald-300 dark:border-slate-800 dark:bg-slate-950 dark:hover:border-emerald-700"
+            >
+              <div className="mb-4 flex items-center gap-2.5">
+                <span className="flex h-8 w-8 items-center justify-center rounded-md bg-emerald-700 text-white dark:bg-emerald-500 dark:text-slate-950">
+                  <Icon className="h-4 w-4" />
+                </span>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-slate-900 dark:text-slate-100">{group.label}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {group.items.map((t) => <Token key={t}>{t}</Token>)}
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
     </section>
   );
 }
@@ -459,7 +588,7 @@ function Skills() {
 function Education() {
   return (
     <section id="education" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <Reveal><Eyebrow index="03">Education &amp; Credentials</Eyebrow></Reveal>
+      <Reveal><Eyebrow index="04">Education &amp; Credentials</Eyebrow></Reveal>
 
       <div className="grid gap-10 lg:grid-cols-2">
         <Reveal>
@@ -515,7 +644,7 @@ function Contact() {
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
         <Reveal>
           <div className="mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-emerald-400">
-            <span className="text-amber-400">04</span>
+            <span className="text-amber-400">05</span>
             <span className="h-px w-8 bg-emerald-700" />
             <span>Contact</span>
           </div>
@@ -612,6 +741,7 @@ export default function App() {
       <main>
         <Hero />
         <Experience />
+        <Projects />
         <Skills />
         <Education />
         <Contact />
